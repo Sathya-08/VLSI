@@ -1,0 +1,59 @@
+module fsm( 
+input rst, 
+input clk, 
+input in, 
+input out 
+); 
+reg out1; 
+reg [1:0]state; 
+assign out=out1; 
+always @ (posedge clk, rst) 
+begin 
+if (rst) begin 
+out1=0; state=2'b00; 
+end 
+else begin 
+case (state) 
+2'b00: begin 
+if (in) begin state=2'b01; 
+out1=1'b0; 
+end 
+else begin 
+state=2'b11; 
+out1=1'b1; 
+end 
+end 
+2'b01: begin 
+if (in) begin 
+state=2'b11; 
+out1=1'b1; 
+end 
+else begin 
+state=2'b10; 
+out1=1'b0; 
+end 
+end 
+2'b10: begin 
+if (in) begin 
+state=2'b00; 
+out1=1'b0; 
+end 
+else begin 
+state=2'b01; 
+out1=1'b0; 
+end 
+end 
+2'b11: begin 
+if (in) begin 
+state=2'b11; 
+out1=1'b1;
+end
+else begin 
+state=2'b10; 
+out1=1'b0; 
+end 
+end 
+endcase 
+end 
+end 
+endmodule
